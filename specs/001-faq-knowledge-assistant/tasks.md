@@ -176,15 +176,15 @@
 
 ### Tests for User Story 5
 
-- [ ] T060 [P] [US5] Harness trace task: write failing role-based authorization API tests in `backend/tests/api/test_role_authorization.py` (Est: 3h; test scenario: end user receives 403 for admin routes and can access chat/feedback routes)
-- [ ] T061 [P] [US5] Write failing frontend navigation tests in `frontend/tests/RoleNavigation.test.tsx` (Est: 2h; test scenario: admin sees admin nav and end user sees chat-focused navigation without admin links)
+- [x] T060 [P] [US5] Harness trace task: write failing role-based authorization API tests in `backend/tests/api/test_role_authorization.py` (Est: 3h; test scenario: end user receives 403 for admin routes and can access chat/feedback routes)
+- [x] T061 [P] [US5] Write failing frontend navigation tests in `frontend/tests/RoleNavigation.test.tsx` (Est: 2h; test scenario: admin sees admin nav and end user sees chat-focused navigation without admin links)
 
 ### Implementation for User Story 5
 
-- [ ] T062 [US5] Apply admin authorization dependency to all admin routers in `backend/app/api/faq_sources.py`, `backend/app/api/analytics.py`, and `backend/app/api/unanswered.py` (Est: 2h; test scenario: T060 passes for every admin route)
-- [ ] T063 [US5] Implement current-user endpoint and local role selector support in `backend/app/api/me.py` and `backend/app/auth/dependencies.py` (Est: 2h; test scenario: admin/end-user identities are returned with stable role values)
-- [ ] T064 [US5] Implement role-aware app shell and navigation in `frontend/src/App.tsx` and `frontend/src/pages/LoginPage.tsx` (Est: 3h; test scenario: T061 passes and direct admin navigation displays unauthorized state for end user)
-- [ ] T065 [US5] Add unauthorized frontend state in `frontend/src/components/common/UnauthorizedState.tsx` and use it in admin pages (Est: 2h; test scenario: unauthorized message explains role limitation without exposing admin details)
+- [x] T062 [US5] Apply admin authorization dependency to all admin routers in `backend/app/api/faq_sources.py`, `backend/app/api/analytics.py`, and `backend/app/api/unanswered.py` (Est: 2h; test scenario: T060 passes for every admin route)
+- [x] T063 [US5] Implement current-user endpoint and local role selector support in `backend/app/api/me.py` and `backend/app/auth/dependencies.py` (Est: 2h; test scenario: admin/end-user identities are returned with stable role values)
+- [x] T064 [US5] Implement role-aware app shell and navigation in `frontend/src/App.tsx` and `frontend/src/pages/LoginPage.tsx` (Est: 3h; test scenario: T061 passes and direct admin navigation displays unauthorized state for end user)
+- [x] T065 [US5] Add unauthorized frontend state in `frontend/src/components/common/UnauthorizedState.tsx` and use it in admin pages (Est: 2h; test scenario: unauthorized message explains role limitation without exposing admin details)
 
 **Verification commands**: `pytest backend/tests/api/test_role_authorization.py`; `npm run test -- RoleNavigation`
 

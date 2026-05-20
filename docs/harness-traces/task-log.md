@@ -10,3 +10,9 @@
 - T039: Added chat API routing and in-memory persistence; verified through the backend chat suite.
 - T040: Added the static Chat screen with grounded/unsupported/no-active-source states; verified through the frontend chat suite.
 - T041: Added chat and use-case frontend service adapters; verified through the frontend service suite and full frontend build.
+- T060: Wrote failing role-authorization API tests covering unauthenticated/end-user/admin/invalid-role cases; tests failed on /me (404) before implementation.
+- T061: Wrote failing frontend navigation tests for admin nav, end-user nav, and UnauthorizedState; failed on missing component and App role prop.
+- T062: Confirmed require_admin is applied to every route in faq_sources.py; no changes needed.
+- T063: Implemented GET /me route and CurrentUserResponse schema; registered me_router in main.py; T060 tests now pass.
+- T064: Implemented role-aware App.tsx with AdminNav/EndUserNav and LoginPage.tsx role selector; T061 tests now pass.
+- T065: Added UnauthorizedState component with accessible text-based unauthorized message; used by App shell.

@@ -12,6 +12,7 @@ from app.api.faq_sources import router as faq_sources_router
 from app.api.chat import reset_chat_repository
 from app.api.chat import router as chat_router
 from app.api.health import router as health_router
+from app.api.me import router as me_router
 from app.schemas.common import ErrorResponse
 
 
@@ -51,6 +52,7 @@ def create_app() -> FastAPI:
         )
 
     app.include_router(health_router)
+    app.include_router(me_router)
     app.include_router(faq_sources_router)
     app.include_router(chat_router)
     reset_source_repository()
