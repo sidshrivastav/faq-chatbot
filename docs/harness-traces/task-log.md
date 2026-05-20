@@ -25,3 +25,4 @@
 - T063: Implemented GET /me route and CurrentUserResponse schema; registered me_router in main.py; T060 tests now pass.
 - T064: Implemented role-aware App.tsx with AdminNav/EndUserNav and LoginPage.tsx role selector; T061 tests now pass.
 - T065: Added UnauthorizedState component with accessible text-based unauthorized message; used by App shell.
+- [Stage 6 apply: modify-active-source-deletion-policy] TC01: Wrote failing tests — delete active source → 409 (confirmed failing), delete inactive → 204. TC02: Added ActiveSourceDeletionError and active-source guard in delete_source(). TC03: DELETE route catches ActiveSourceDeletionError → 409 with code source_active. TC04: Updated openapi.yaml with 409 on DELETE path. Final: 82 backend tests passing, zero regressions.
