@@ -94,19 +94,19 @@
 
 ### Tests for User Story 2
 
-- [ ] T032 [P] [US2] Harness trace task: write failing service tests for deterministic retrieval and mocked LLM boundary in `backend/tests/services/test_answer_service.py` (Est: 3h; test scenario: covered question calls fake LLM with active-source entries and unsupported question skips LLM)
-- [ ] T033 [P] [US2] Write failing API tests for `POST /chat/questions` in `backend/tests/api/test_chat_api.py` (Est: 3h; test scenario: answered, unsupported, no-active-source, and inactive-source exclusion responses match contract)
-- [ ] T034 [P] [US2] Write failing frontend chat tests in `frontend/tests/ChatPage.test.tsx` (Est: 3h; test scenario: use case chip, answer loading, grounded answer, unsupported answer, and no-active-source states render)
+- [x] T032 [P] [US2] Harness trace task: write failing service tests for deterministic retrieval and mocked LLM boundary in `backend/tests/services/test_answer_service.py` (Est: 3h; test scenario: covered question calls fake LLM with active-source entries and unsupported question skips LLM)
+- [x] T033 [P] [US2] Write failing API tests for `POST /chat/questions` in `backend/tests/api/test_chat_api.py` (Est: 3h; test scenario: answered, unsupported, no-active-source, and inactive-source exclusion responses match contract)
+- [x] T034 [P] [US2] Write failing frontend chat tests in `frontend/tests/ChatPage.test.tsx` (Est: 3h; test scenario: use case chip, answer loading, grounded answer, unsupported answer, and no-active-source states render)
 
 ### Implementation for User Story 2
 
-- [ ] T035 [P] [US2] Implement question, answer, and conversation schemas in `backend/app/schemas/chat.py` (Est: 2h; test scenario: schema rejects empty question text and missing use case)
-- [ ] T036 [US2] Implement deterministic retrieval in `backend/app/services/retrieval_service.py` with normalization, lexical scoring, thresholds, and active-source filtering (Est: 4h; test scenario: T032 retrieval cases pass without LLM provider calls)
-- [ ] T037 [US2] Implement LLM provider boundary and fake provider in `backend/app/llm/provider.py`, `backend/app/llm/fake_provider.py`, and `backend/app/llm/prompt_builder.py` (Est: 3h; test scenario: fake provider is used in tests and no external API client is imported)
-- [ ] T038 [US2] Implement answer orchestration in `backend/app/services/answer_service.py` for answered, unsupported, no-active-source, and error states (Est: 4h; test scenario: T032 passes and unsupported answers contain no fabricated source facts)
-- [ ] T039 [US2] Implement chat API route in `backend/app/api/chat.py` and persistence calls in `backend/app/repositories/chat.py` (Est: 3h; test scenario: T033 passes and saved answer records retain source-at-time)
-- [ ] T040 [P] [US2] Implement Chat screen in `frontend/src/pages/chat/ChatPage.tsx` with use case context, conversation list, composer, loading, grounded, unsupported, and no-active-source states (Est: 4h; test scenario: T034 passes with keyboard-accessible composer)
-- [ ] T041 [US2] Wire chat and use-case frontend API functions in `frontend/src/services/chat.ts` and `frontend/src/services/useCases.ts` (Est: 2h; test scenario: mocked calls submit `use_case_id` and render response `answer_state`)
+- [x] T035 [P] [US2] Implement question, answer, and conversation schemas in `backend/app/schemas/chat.py` (Est: 2h; test scenario: schema rejects empty question text and missing use case)
+- [x] T036 [US2] Implement deterministic retrieval in `backend/app/services/retrieval_service.py` with normalization, lexical scoring, thresholds, and active-source filtering (Est: 4h; test scenario: T032 retrieval cases pass without LLM provider calls)
+- [x] T037 [US2] Implement LLM provider boundary and fake provider in `backend/app/llm/provider.py`, `backend/app/llm/fake_provider.py`, and `backend/app/llm/prompt_builder.py` (Est: 3h; test scenario: fake provider is used in tests and no external API client is imported)
+- [x] T038 [US2] Implement answer orchestration in `backend/app/services/answer_service.py` for answered, unsupported, no-active-source, and error states (Est: 4h; test scenario: T032 passes and unsupported answers contain no fabricated source facts)
+- [x] T039 [US2] Implement chat API route in `backend/app/api/chat.py` and persistence calls in `backend/app/repositories/chat.py` (Est: 3h; test scenario: T033 passes and saved answer records retain source-at-time)
+- [x] T040 [P] [US2] Implement Chat screen in `frontend/src/pages/chat/ChatPage.tsx` with use case context, conversation list, composer, loading, grounded, unsupported, and no-active-source states (Est: 4h; test scenario: T034 passes with keyboard-accessible composer)
+- [x] T041 [US2] Wire chat and use-case frontend API functions in `frontend/src/services/chat.ts` and `frontend/src/services/useCases.ts` (Est: 2h; test scenario: mocked calls submit `use_case_id` and render response `answer_state`)
 
 **Verification commands**: `pytest backend/tests/services/test_answer_service.py backend/tests/api/test_chat_api.py`; `npm run test -- ChatPage`
 

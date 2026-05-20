@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Guidance for Codex and other AI agents implementing the Configurable FAQ Knowledge Assistant.
+Guidance for Claude, Codex, and other AI agents implementing the Configurable FAQ Knowledge Assistant.
 
 <!-- SPECKIT START -->
 Primary implementation context lives in:
@@ -213,11 +213,20 @@ Avoid logging unnecessary full question/answer content. Never log secrets.
 - Use clear commit boundaries around completed logical work.
 - If a requested path does not exist, verify the active Spec Kit feature path before proceeding.
 
+### Claude-Specific Notes
+
+- Invoke custom skills via the `Skill` tool (e.g., `Skill({ skill: "test-writer" })`).
+- Use the `task-runner` skill when the user asks to implement a task ID or range: `Skill({ skill: "task-runner", args: "T001" })`.
+- Use parallel tool calls (Read, Grep, Glob) when gathering independent context before implementation.
+- Persist project decisions, user preferences, and non-obvious constraints to memory files under `.claude/` so future sessions retain context.
+- Do not call real LLM provider APIs in tests; use the fake provider in `backend/app/llm/`.
+
 ## Custom Skill: test-writer
 
 Use `docs/skills/test-writer.md` before implementation tasks that touch backend or frontend behavior.
+Claude: invoke with `Skill({ skill: "test-writer" })`.
 
-The `test-writer` skill requires Codex to:
+The `test-writer` skill requires the agent to:
 
 - Produce a test plan before implementation.
 - Write failing tests before production code.
@@ -227,6 +236,22 @@ The `test-writer` skill requires Codex to:
 - Cover authorization, validation, not-found, cross-user access, LLM failure, no-relevant-source, feedback, analytics, and regression cases where applicable.
 - Record representative harness traces under `docs/harness-traces/` for risky or assessment-representative tasks.
 
+## Custom Skill: task-runner
+
+Use `docs/skills/task-runner.md` whenever the user asks to implement a task ID or task range from `specs/001-faq-knowledge-assistant/tasks.md`.
+Claude: invoke with `Skill({ skill: "task-runner", args: "<task-id-or-range>" })`.
+
+The `task-runner` skill must:
+
+- Parse the requested task ID or range.
+- Locate exact task descriptions in `tasks.md`.
+- Execute tasks sequentially.
+- Enforce scope control.
+- Use `test-writer` for test planning.
+- Run verification commands.
+- Preserve trace logs.
+- Stop after the requested task or range.
+
 ## 14. Harness Workflow: Brainstorm -> Plan -> Implement -> Verify
 
 Use this workflow for meaningful implementation work:
@@ -235,6 +260,8 @@ Use this workflow for meaningful implementation work:
 2. **Plan**: Select the next task from `tasks.md`, define files to edit, and identify the verification command.
 3. **Implement**: Write failing tests first, implement the code, and keep business logic in services.
 4. **Verify**: Run focused tests, then broader tests where useful. Record results and unresolved gaps.
+
+Claude: use `EnterPlanMode` during step 2 when the plan needs user sign-off before implementation begins.
 
 Representative harness trace areas:
 
