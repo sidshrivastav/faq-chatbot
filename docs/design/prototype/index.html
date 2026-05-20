@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FAQ Knowledge Assistant Prototype</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Static Stage 2 Prototype</p>
+        <h1>Configurable FAQ Knowledge Assistant</h1>
+      </div>
+      <nav class="jump-nav" aria-label="Prototype screens">
+        <a href="#login">Login</a>
+        <a href="#admin-dashboard">Admin</a>
+        <a href="#sources">Sources</a>
+        <a href="#source-detail">Detail</a>
+        <a href="#chat">Chat</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#unanswered">Unanswered</a>
+        <a href="#analytics">Analytics</a>
+      </nav>
+    </header>
+
+    <main class="prototype-shell">
+      <section class="screen login-screen" id="login" aria-labelledby="login-title">
+        <div class="screen-note">
+          <span class="screen-number">01</span>
+          <span>Login screen - visual entry only, no authentication logic</span>
+        </div>
+        <div class="login-panel">
+          <div class="login-brand">
+            <p class="eyebrow">FAQ Assistant</p>
+            <h2 id="login-title">Sign in to continue</h2>
+            <p>Admins manage FAQ sources and analytics. End users ask grounded questions from active sources.</p>
+          </div>
+          <form class="login-form" aria-label="Static login form">
+            <label>
+              Email
+              <input type="email" value="admin@example.edu" aria-label="Email">
+            </label>
+            <label>
+              Password
+              <input type="password" value="password" aria-label="Password">
+            </label>
+            <div class="role-choice" aria-label="Role preview">
+              <span class="role-pill selected">Admin</span>
+              <span class="role-pill">End user</span>
+            </div>
+            <a class="button primary" href="#admin-dashboard">Preview admin dashboard</a>
+            <a class="button secondary" href="#chat">Preview end-user chat</a>
+          </form>
+        </div>
+      </section>
+
+      <section class="screen app-screen" id="admin-dashboard" aria-labelledby="admin-dashboard-title">
+        <aside class="sidebar" aria-label="Admin navigation">
+          <div class="brand-mark">FQ</div>
+          <a class="nav-item active" href="#admin-dashboard">Overview</a>
+          <a class="nav-item" href="#sources">FAQ Sources</a>
+          <a class="nav-item" href="#analytics">Analytics</a>
+          <a class="nav-item" href="#unanswered">Unanswered</a>
+          <a class="nav-item" href="#chat">User Chat</a>
+        </aside>
+        <div class="workspace">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Admin Dashboard</p>
+              <h2 id="admin-dashboard-title">Operational overview</h2>
+            </div>
+            <div class="toolbar">
+              <button>Last 30 days</button>
+              <button>All use cases</button>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card">
+              <span class="metric-label">Active sources</span>
+              <strong>4</strong>
+              <span class="metric-note good">All priority use cases covered</span>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Questions</span>
+              <strong>1,284</strong>
+              <span class="metric-note">+14% from previous period</span>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Answered</span>
+              <strong>89%</strong>
+              <span class="metric-note good">Grounded in active sources</span>
+            </article>
+            <article class="metric-card warning">
+              <span class="metric-label">Unanswered</span>
+              <strong>142</strong>
+              <span class="metric-note">Admissions has the largest gap</span>
+            </article>
+          </div>
+
+          <div class="two-column">
+            <article class="panel">
+              <div class="panel-header">
+                <h3>Use case health</h3>
+                <a href="#analytics">View analytics</a>
+              </div>
+              <div class="status-list">
+                <div class="status-row">
+                  <span>HR</span>
+                  <strong>Active: Employee handbook FAQ</strong>
+                  <span class="badge success">Ready</span>
+                </div>
+                <div class="status-row">
+                  <span>IT support</span>
+                  <strong>Active: Device support FAQ</strong>
+                  <span class="badge success">Ready</span>
+                </div>
+                <div class="status-row">
+                  <span>Admissions</span>
+                  <strong>Active: Graduate admissions FAQ</strong>
+                  <span class="badge warning">Content gaps</span>
+                </div>
+                <div class="status-row">
+                  <span>Facilities</span>
+                  <strong>No active source</strong>
+                  <span class="badge danger">Needs source</span>
+                </div>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-header">
+                <h3>States preview</h3>
+                <span class="muted">Empty, loading, error</span>
+              </div>
+              <div class="state-stack">
+                <div class="empty-state">No feedback yet for Product Support this week.</div>
+                <div class="loading-row"><span></span><span></span><span></span></div>
+                <div class="error-state">Analytics could not be refreshed. Keep current filters and retry.</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen app-screen" id="sources" aria-labelledby="sources-title">
+        <aside class="sidebar" aria-label="Admin navigation">
+          <div class="brand-mark">FQ</div>
+          <a class="nav-item" href="#admin-dashboard">Overview</a>
+          <a class="nav-item active" href="#sources">FAQ Sources</a>
+          <a class="nav-item" href="#analytics">Analytics</a>
+          <a class="nav-item" href="#unanswered">Unanswered</a>
+        </aside>
+        <div class="workspace">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">FAQ Sources</p>
+              <h2 id="sources-title">Manage active knowledge by use case</h2>
+            </div>
+            <a class="button primary" href="#source-detail">Add source</a>
+          </div>
+          <div class="filter-bar" aria-label="Source filters">
+            <button>Use case: All</button>
+            <button>Status: All</button>
+            <button>Active state: Any</button>
+            <button>Updated: 90 days</button>
+          </div>
+          <div class="data-table" role="table" aria-label="FAQ source list">
+            <div class="table-row table-head" role="row">
+              <span>Source</span>
+              <span>Use case</span>
+              <span>Status</span>
+              <span>Last update</span>
+              <span>Action</span>
+            </div>
+            <div class="table-row" role="row">
+              <span><strong>Employee handbook FAQ</strong><small>81 entries</small></span>
+              <span>HR</span>
+              <span><span class="badge success">Active and ready</span></span>
+              <span>May 14, 2026</span>
+              <span><a href="#source-detail">Open</a></span>
+            </div>
+            <div class="table-row" role="row">
+              <span><strong>Device support FAQ</strong><small>54 entries</small></span>
+              <span>IT support</span>
+              <span><span class="badge success">Active and ready</span></span>
+              <span>May 11, 2026</span>
+              <span><a href="#source-detail">Open</a></span>
+            </div>
+            <div class="table-row" role="row">
+              <span><strong>Facilities quick answers</strong><small>0 valid entries</small></span>
+              <span>Facilities</span>
+              <span><span class="badge danger">Invalid source</span></span>
+              <span>May 7, 2026</span>
+              <span><a href="#source-detail">Fix</a></span>
+            </div>
+            <div class="table-row muted-row" role="row">
+              <span><strong>No sources match "Archived Admissions"</strong><small>Empty filter state</small></span>
+              <span>-</span>
+              <span><span class="badge neutral">No results</span></span>
+              <span>-</span>
+              <span>Clear filters</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen app-screen" id="source-detail" aria-labelledby="source-detail-title">
+        <aside class="sidebar" aria-label="Admin navigation">
+          <div class="brand-mark">FQ</div>
+          <a class="nav-item" href="#admin-dashboard">Overview</a>
+          <a class="nav-item active" href="#sources">FAQ Sources</a>
+          <a class="nav-item" href="#analytics">Analytics</a>
+          <a class="nav-item" href="#unanswered">Unanswered</a>
+        </aside>
+        <div class="workspace">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">FAQ Source Detail</p>
+              <h2 id="source-detail-title">Employee handbook FAQ</h2>
+            </div>
+            <div class="toolbar">
+              <button>Archive</button>
+              <button>Deactivate</button>
+              <button class="primary-button">Save changes</button>
+            </div>
+          </div>
+          <div class="detail-grid">
+            <article class="panel source-summary">
+              <h3>Source summary</h3>
+              <dl>
+                <div><dt>Use case</dt><dd>HR</dd></div>
+                <div><dt>Active state</dt><dd><span class="badge success">Active source</span></dd></div>
+                <div><dt>Readiness</dt><dd><span class="badge success">Ready for Q&A</span></dd></div>
+                <div><dt>Last updated</dt><dd>May 14, 2026 by Priya Menon</dd></div>
+              </dl>
+              <div class="warning-box">
+                Activating another HR source will change future HR answers. Historical analytics remain tied to the source used at the time.
+              </div>
+            </article>
+            <article class="panel">
+              <h3>Content preview</h3>
+              <div class="faq-preview">
+                <div>
+                  <strong>How do I update my tax declaration?</strong>
+                  <p>Open payroll self-service, choose Tax Declaration, and submit changes before the monthly cutoff.</p>
+                </div>
+                <div>
+                  <strong>What is the parental leave policy?</strong>
+                  <p>Eligible employees can request parental leave through HR support with manager approval.</p>
+                </div>
+                <div class="invalid-sample">
+                  <strong>Duplicate entry warning</strong>
+                  <p>Two reimbursement questions have conflicting wording. Review before the next activation.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen chat-screen" id="chat" aria-labelledby="chat-title">
+        <div class="chat-header">
+          <div>
+            <p class="eyebrow">End-User Chat</p>
+            <h2 id="chat-title">Ask HR policy questions</h2>
+          </div>
+          <div class="context-chip">Use case: HR · Active source: Employee handbook FAQ</div>
+        </div>
+        <div class="chat-layout">
+          <aside class="use-case-panel">
+            <h3>Use cases</h3>
+            <button class="use-case active">HR <span>Answerable</span></button>
+            <button class="use-case">IT support <span>Answerable</span></button>
+            <button class="use-case disabled">Facilities <span>No active source</span></button>
+            <div class="empty-state small">No admissions source changes this week.</div>
+          </aside>
+          <section class="conversation" aria-label="Chat conversation">
+            <div class="message user-message">
+              <p>How do I update my tax declaration?</p>
+            </div>
+            <div class="message assistant-message">
+              <p>You can update it in payroll self-service by opening Tax Declaration and submitting changes before the monthly cutoff.</p>
+              <div class="answer-meta">Grounded in Employee handbook FAQ · HR</div>
+              <div class="feedback-inline">
+                <button>Helpful</button>
+                <button>Unhelpful</button>
+              </div>
+            </div>
+            <div class="message user-message">
+              <p>Can the policy cover relocation tax advice too?</p>
+            </div>
+            <div class="message assistant-message unanswered">
+              <p>I cannot answer that from the active HR FAQ source. This question will be available for admin review as unanswered.</p>
+              <div class="answer-meta">Unanswered · Active source did not contain enough information</div>
+            </div>
+            <div class="message assistant-message loading-message">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="composer">
+              <input type="text" value="What documents are needed for parental leave?" aria-label="Ask a question">
+              <button>Send</button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="screen feedback-screen" id="feedback" aria-labelledby="feedback-title">
+        <div class="page-header no-pad">
+          <div>
+            <p class="eyebrow">Feedback State</p>
+            <h2 id="feedback-title">Answer feedback attached to response</h2>
+          </div>
+          <a class="button secondary" href="#chat">Back to chat</a>
+        </div>
+        <div class="feedback-demo">
+          <article class="message assistant-message expanded">
+            <p>You can request parental leave by submitting the HR leave form and manager approval in the employee portal.</p>
+            <div class="answer-meta">Grounded in Employee handbook FAQ · HR</div>
+            <div class="feedback-state">
+              <div class="rating-row">
+                <button class="selected-rating">Helpful selected</button>
+                <button>Unhelpful</button>
+              </div>
+              <div class="success-note">Feedback saved. Thank you for helping improve answer quality.</div>
+            </div>
+          </article>
+          <article class="message assistant-message expanded">
+            <p>I cannot answer that from the active FAQ source.</p>
+            <div class="answer-meta">Unanswered · Recorded for admin review</div>
+            <div class="feedback-state">
+              <div class="rating-row">
+                <button>Helpful</button>
+                <button class="selected-rating negative">Unhelpful selected</button>
+              </div>
+              <label>
+                Optional comment
+                <textarea>Question is common during admissions season; this should be added to the FAQ.</textarea>
+              </label>
+              <div class="error-state">Feedback could not be saved. Retry keeps the selected rating and comment.</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="screen app-screen" id="unanswered" aria-labelledby="unanswered-title">
+        <aside class="sidebar" aria-label="Admin navigation">
+          <div class="brand-mark">FQ</div>
+          <a class="nav-item" href="#admin-dashboard">Overview</a>
+          <a class="nav-item" href="#sources">FAQ Sources</a>
+          <a class="nav-item" href="#analytics">Analytics</a>
+          <a class="nav-item active" href="#unanswered">Unanswered</a>
+        </aside>
+        <div class="workspace">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Unanswered Questions</p>
+              <h2 id="unanswered-title">Review content gaps</h2>
+            </div>
+            <div class="toolbar">
+              <button>Use case: Admissions</button>
+              <button>Source: Graduate admissions FAQ</button>
+            </div>
+          </div>
+          <div class="review-layout">
+            <div class="question-list">
+              <article class="question-card active">
+                <span class="badge warning">Unanswered</span>
+                <h3>Can international applicants defer admission after visa delays?</h3>
+                <p>Admissions · Graduate admissions FAQ · May 18, 2026</p>
+              </article>
+              <article class="question-card">
+                <span class="badge warning">Unanswered</span>
+                <h3>What is the exact scholarship appeal deadline?</h3>
+                <p>Admissions · Graduate admissions FAQ · May 17, 2026</p>
+              </article>
+              <article class="question-card muted-row">
+                <span class="badge neutral">No results</span>
+                <h3>No unanswered questions for Product Support this month.</h3>
+                <p>Empty filtered state example</p>
+              </article>
+            </div>
+            <article class="panel question-detail">
+              <h3>Question detail</h3>
+              <p class="quoted">Can international applicants defer admission after visa delays?</p>
+              <dl>
+                <div><dt>Use case</dt><dd>Admissions</dd></div>
+                <div><dt>Active source at time asked</dt><dd>Graduate admissions FAQ</dd></div>
+                <div><dt>Assistant message</dt><dd>Cannot answer from the active FAQ source.</dd></div>
+                <div><dt>Feedback</dt><dd>Unhelpful · "Please add visa delay policy."</dd></div>
+              </dl>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen app-screen" id="analytics" aria-labelledby="analytics-title">
+        <aside class="sidebar" aria-label="Admin navigation">
+          <div class="brand-mark">FQ</div>
+          <a class="nav-item" href="#admin-dashboard">Overview</a>
+          <a class="nav-item" href="#sources">FAQ Sources</a>
+          <a class="nav-item active" href="#analytics">Analytics</a>
+          <a class="nav-item" href="#unanswered">Unanswered</a>
+        </aside>
+        <div class="workspace">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Analytics Dashboard</p>
+              <h2 id="analytics-title">Measure coverage and feedback</h2>
+            </div>
+            <div class="toolbar">
+              <button>Last 30 days</button>
+              <button>All sources</button>
+              <button>All use cases</button>
+            </div>
+          </div>
+          <div class="metric-grid">
+            <article class="metric-card"><span class="metric-label">Question volume</span><strong>1,284</strong><span class="metric-note">Across 4 use cases</span></article>
+            <article class="metric-card"><span class="metric-label">Answered</span><strong>1,142</strong><span class="metric-note good">89% coverage</span></article>
+            <article class="metric-card warning"><span class="metric-label">Unanswered</span><strong>142</strong><span class="metric-note">11% need review</span></article>
+            <article class="metric-card"><span class="metric-label">Helpful feedback</span><strong>812</strong><span class="metric-note good">74% of ratings</span></article>
+          </div>
+          <div class="analytics-grid">
+            <article class="panel">
+              <h3>Answered vs unanswered</h3>
+              <div class="bar-chart" aria-label="Answered versus unanswered chart">
+                <div style="height: 82%"><span>HR</span></div>
+                <div style="height: 74%"><span>IT</span></div>
+                <div style="height: 46%"><span>Adm</span></div>
+                <div style="height: 61%"><span>Prod</span></div>
+              </div>
+            </article>
+            <article class="panel">
+              <h3>Filter state examples</h3>
+              <div class="state-stack">
+                <div class="loading-row"><span></span><span></span><span></span></div>
+                <div class="empty-state">No analytics yet for the Facilities use case.</div>
+                <div class="error-state">Could not refresh analytics. Retry keeps selected filters.</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
