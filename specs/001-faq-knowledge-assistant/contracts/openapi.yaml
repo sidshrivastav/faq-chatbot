@@ -1,0 +1,553 @@
+openapi: 3.1.0
+info:
+  title: Configurable FAQ Knowledge Assistant API
+  version: 0.1.0
+  description: Contract for FAQ source management, grounded chat, feedback, unanswered review, and analytics.
+servers:
+  - url: http://localhost:8000
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: Service is available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /me:
+    get:
+      summary: Current local-development user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  /use-cases:
+    get:
+      summary: List use cases for chat context selection
+      responses:
+        "200":
+          description: Use cases
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/UseCase"
+  /admin/faq-sources:
+    get:
+      summary: List FAQ sources with admin filters
+      parameters:
+        - $ref: "#/components/parameters/UseCaseId"
+        - name: status
+          in: query
+          schema:
+            $ref: "#/components/schemas/FaqSourceStatus"
+        - name: active
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: FAQ sources
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FaqSource"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+    post:
+      summary: Create FAQ source
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FaqSourceCreate"
+      responses:
+        "201":
+          description: Created FAQ source
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqSource"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /admin/faq-sources/{source_id}:
+    get:
+      summary: Get FAQ source detail
+      parameters:
+        - $ref: "#/components/parameters/SourceId"
+      responses:
+        "200":
+          description: FAQ source detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqSourceDetail"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    patch:
+      summary: Update FAQ source
+      parameters:
+        - $ref: "#/components/parameters/SourceId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FaqSourceUpdate"
+      responses:
+        "200":
+          description: Updated FAQ source
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqSourceDetail"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      summary: Delete FAQ source
+      parameters:
+        - $ref: "#/components/parameters/SourceId"
+      responses:
+        "204":
+          description: Deleted
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /admin/faq-sources/{source_id}/activate:
+    post:
+      summary: Activate FAQ source for its use case
+      parameters:
+        - $ref: "#/components/parameters/SourceId"
+      responses:
+        "200":
+          description: Activated source
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqSource"
+        "409":
+          $ref: "#/components/responses/Conflict"
+  /admin/faq-sources/{source_id}/deactivate:
+    post:
+      summary: Deactivate FAQ source
+      parameters:
+        - $ref: "#/components/parameters/SourceId"
+      responses:
+        "200":
+          description: Deactivated source
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqSource"
+  /admin/faq-sources/{source_id}/archive:
+    post:
+      summary: Archive FAQ source
+      parameters:
+        - $ref: "#/components/parameters/SourceId"
+      responses:
+        "200":
+          description: Archived source
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FaqSource"
+  /chat/questions:
+    post:
+      summary: Ask a grounded FAQ question
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionCreate"
+      responses:
+        "200":
+          description: Answered, unsupported, or no-active-source chat response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatAnswerResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+  /answers/{answer_id}/feedback:
+    post:
+      summary: Submit feedback for an answer or unanswered response
+      parameters:
+        - name: answer_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FeedbackCreate"
+      responses:
+        "201":
+          description: Feedback saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Feedback"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /admin/unanswered-questions:
+    get:
+      summary: List unanswered questions for admin review
+      parameters:
+        - $ref: "#/components/parameters/UseCaseId"
+        - $ref: "#/components/parameters/SourceIdQuery"
+        - $ref: "#/components/parameters/FromDate"
+        - $ref: "#/components/parameters/ToDate"
+      responses:
+        "200":
+          description: Unanswered questions
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [items]
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/UnansweredQuestion"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+  /admin/analytics/summary:
+    get:
+      summary: Get analytics summary for admin dashboard
+      parameters:
+        - $ref: "#/components/parameters/UseCaseId"
+        - $ref: "#/components/parameters/SourceIdQuery"
+        - $ref: "#/components/parameters/FromDate"
+        - $ref: "#/components/parameters/ToDate"
+      responses:
+        "200":
+          description: Analytics summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalyticsSummary"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+components:
+  parameters:
+    UseCaseId:
+      name: use_case_id
+      in: query
+      schema:
+        type: string
+    SourceId:
+      name: source_id
+      in: path
+      required: true
+      schema:
+        type: string
+    SourceIdQuery:
+      name: source_id
+      in: query
+      schema:
+        type: string
+    FromDate:
+      name: from
+      in: query
+      schema:
+        type: string
+        format: date-time
+    ToDate:
+      name: to
+      in: query
+      schema:
+        type: string
+        format: date-time
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Forbidden:
+      description: Current role cannot access this resource
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Conflict:
+      description: Requested state transition conflicts with source readiness or active-source rules
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+          additionalProperties: true
+    User:
+      type: object
+      required: [id, email, display_name, role]
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        display_name:
+          type: string
+        role:
+          type: string
+          enum: [admin, end_user]
+    UseCase:
+      type: object
+      required: [id, name, has_active_source]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        has_active_source:
+          type: boolean
+        active_source_name:
+          type: string
+    FaqSourceStatus:
+      type: string
+      enum: [draft, ready, active, inactive, invalid, archived]
+    FaqSource:
+      type: object
+      required: [id, name, use_case_id, status, is_active, readiness_state]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        use_case_id:
+          type: string
+        use_case_name:
+          type: string
+        status:
+          $ref: "#/components/schemas/FaqSourceStatus"
+        is_active:
+          type: boolean
+        readiness_state:
+          type: string
+          enum: [not_checked, ready, invalid, warning]
+        readiness_message:
+          type: string
+        updated_at:
+          type: string
+          format: date-time
+    FaqEntry:
+      type: object
+      required: [question_text, answer_text]
+      properties:
+        id:
+          type: string
+        question_text:
+          type: string
+        answer_text:
+          type: string
+        keywords:
+          type: array
+          items:
+            type: string
+    FaqSourceDetail:
+      allOf:
+        - $ref: "#/components/schemas/FaqSource"
+        - type: object
+          properties:
+            entries:
+              type: array
+              items:
+                $ref: "#/components/schemas/FaqEntry"
+            warnings:
+              type: array
+              items:
+                type: string
+    FaqSourceCreate:
+      type: object
+      required: [name, use_case_id, entries]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        use_case_id:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/FaqEntry"
+    FaqSourceUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/FaqEntry"
+    QuestionCreate:
+      type: object
+      required: [use_case_id, question_text]
+      properties:
+        conversation_id:
+          type: string
+        use_case_id:
+          type: string
+        question_text:
+          type: string
+    ChatAnswerResponse:
+      type: object
+      required: [question_id, answer_id, answer_state, message, use_case_id, feedback_allowed]
+      properties:
+        question_id:
+          type: string
+        answer_id:
+          type: string
+        answer_state:
+          type: string
+          enum: [answered, unsupported, no_active_source, error]
+        message:
+          type: string
+        use_case_id:
+          type: string
+        source_id:
+          type: string
+        source_name:
+          type: string
+        retrieved_entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/FaqEntry"
+        feedback_allowed:
+          type: boolean
+    FeedbackCreate:
+      type: object
+      required: [rating]
+      properties:
+        rating:
+          type: string
+          enum: [helpful, unhelpful]
+        comment:
+          type: string
+    Feedback:
+      type: object
+      required: [id, answer_id, question_id, rating, created_at]
+      properties:
+        id:
+          type: string
+        answer_id:
+          type: string
+        question_id:
+          type: string
+        rating:
+          type: string
+          enum: [helpful, unhelpful]
+        comment:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    UnansweredQuestion:
+      type: object
+      required: [id, question_text, use_case_id, reason, created_at]
+      properties:
+        id:
+          type: string
+        question_text:
+          type: string
+        use_case_id:
+          type: string
+        use_case_name:
+          type: string
+        source_id:
+          type: string
+        source_name:
+          type: string
+        reason:
+          type: string
+          enum: [no_active_source, insufficient_context, ambiguous_question, source_not_ready]
+        feedback_rating:
+          type: string
+          enum: [helpful, unhelpful]
+        feedback_comment:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+    AnalyticsSummary:
+      type: object
+      required: [question_count, answered_count, unanswered_count, helpful_feedback_count, unhelpful_feedback_count]
+      properties:
+        question_count:
+          type: integer
+          minimum: 0
+        answered_count:
+          type: integer
+          minimum: 0
+        unanswered_count:
+          type: integer
+          minimum: 0
+        helpful_feedback_count:
+          type: integer
+          minimum: 0
+        unhelpful_feedback_count:
+          type: integer
+          minimum: 0
+        top_unanswered:
+          type: array
+          items:
+            $ref: "#/components/schemas/UnansweredQuestion"
