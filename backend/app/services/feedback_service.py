@@ -47,5 +47,6 @@ class FeedbackService:
             faq_source_id_at_time=answer.faq_source_id_at_time,
             user_id=user_id,
             rating=payload.rating,
+            reason=payload.reason,
             comment=payload.comment,
         )

@@ -189,3 +189,88 @@ def test_missing_rating_returns_422(client: TestClient) -> None:
         json={"comment": "nice"},
     )
     assert response.status_code == 422
+
+
+# ---------------------------------------------------------------------------
+# TC01 – add-feedback-reasons: structured reason field
+# ---------------------------------------------------------------------------
+
+def test_unhelpful_feedback_with_valid_reason_returns_201(client: TestClient) -> None:
+    _create_and_activate_source(client)
+    answer = _ask_question(client)
+
+    response = client.post(
+        f"/answers/{answer['answer_id']}/feedback",
+        headers=END_USER_HEADERS,
+        json={"rating": "unhelpful", "reason": "not_specific_enough"},
+    )
+    assert response.status_code == 201
+    data = response.json()
+    assert data["rating"] == "unhelpful"
+    assert data["reason"] == "not_specific_enough"
+
+
+def test_unhelpful_feedback_without_reason_has_null_reason(client: TestClient) -> None:
+    _create_and_activate_source(client)
+    answer = _ask_question(client)
+
+    response = client.post(
+        f"/answers/{answer['answer_id']}/feedback",
+        headers=END_USER_HEADERS,
+        json={"rating": "unhelpful"},
+    )
+    assert response.status_code == 201
+    assert response.json()["reason"] is None
+
+
+def test_helpful_feedback_with_reason_returns_422(client: TestClient) -> None:
+    response = client.post(
+        "/answers/any-id/feedback",
+        headers=END_USER_HEADERS,
+        json={"rating": "helpful", "reason": "not_specific_enough"},
+    )
+    assert response.status_code == 422
+
+
+def test_invalid_reason_value_returns_422(client: TestClient) -> None:
+    response = client.post(
+        "/answers/any-id/feedback",
+        headers=END_USER_HEADERS,
+        json={"rating": "unhelpful", "reason": "not_a_valid_reason"},
+    )
+    assert response.status_code == 422
+
+
+def test_all_five_reason_values_are_accepted(client: TestClient) -> None:
+    reasons = [
+        "incorrect_answer",
+        "not_specific_enough",
+        "missing_from_faq",
+        "confusing_response",
+        "outdated_source",
+    ]
+    _create_and_activate_source(client)
+    for reason in reasons:
+        c = TestClient(create_app())
+        _create_and_activate_source(c)
+        answer = _ask_question(c)
+        response = c.post(
+            f"/answers/{answer['answer_id']}/feedback",
+            headers=END_USER_HEADERS,
+            json={"rating": "unhelpful", "reason": reason},
+        )
+        assert response.status_code == 201, f"reason={reason} failed"
+        assert response.json()["reason"] == reason
+
+
+def test_feedback_response_includes_reason_field(client: TestClient) -> None:
+    _create_and_activate_source(client)
+    answer = _ask_question(client)
+
+    response = client.post(
+        f"/answers/{answer['answer_id']}/feedback",
+        headers=END_USER_HEADERS,
+        json={"rating": "helpful"},
+    )
+    assert response.status_code == 201
+    assert "reason" in response.json()

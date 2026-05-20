@@ -53,6 +53,40 @@ describe("AnswerFeedback – saved state", () => {
   });
 });
 
+describe("AnswerFeedback – reason selector (TC03)", () => {
+  it("shows reason selector when selectedRating is unhelpful", () => {
+    const markup = renderToStaticMarkup(
+      <AnswerFeedback answerId="ans-1" state="idle" selectedRating="unhelpful" />,
+    );
+    expect(markup).toMatch(/incorrect_answer|not_specific_enough|missing_from_faq|confusing_response|outdated_source/);
+  });
+
+  it("does not show reason selector in plain idle state", () => {
+    const markup = renderToStaticMarkup(
+      <AnswerFeedback answerId="ans-1" state="idle" />,
+    );
+    expect(markup).not.toMatch(/incorrect_answer|not_specific_enough|missing_from_faq/);
+  });
+
+  it("each reason option has a human-readable label", () => {
+    const markup = renderToStaticMarkup(
+      <AnswerFeedback answerId="ans-1" state="idle" selectedRating="unhelpful" />,
+    );
+    expect(markup).toMatch(/Incorrect answer/i);
+    expect(markup).toMatch(/Not specific enough/i);
+    expect(markup).toMatch(/Missing from FAQ/i);
+    expect(markup).toMatch(/Confusing response/i);
+    expect(markup).toMatch(/Outdated source/i);
+  });
+
+  it("reason options use input elements with accessible labels", () => {
+    const markup = renderToStaticMarkup(
+      <AnswerFeedback answerId="ans-1" state="idle" selectedRating="unhelpful" />,
+    );
+    expect(markup).toContain('type="radio"');
+  });
+});
+
 describe("AnswerFeedback – error state", () => {
   it("renders error text on submission failure", () => {
     const markup = renderToStaticMarkup(

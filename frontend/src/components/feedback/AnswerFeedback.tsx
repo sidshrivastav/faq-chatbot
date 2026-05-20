@@ -1,13 +1,49 @@
-type FeedbackRating = "helpful" | "unhelpful";
+import {
+  FEEDBACK_REASON_LABELS,
+  type FeedbackRating,
+  type FeedbackReason,
+} from "../../services/feedback";
+
+const REASON_VALUES = Object.keys(FEEDBACK_REASON_LABELS) as FeedbackReason[];
 
 type AnswerFeedbackProps = {
   answerId: string;
   state: "idle" | "saving" | "saved" | "error";
   rating?: FeedbackRating;
+  selectedRating?: FeedbackRating;
+  reason?: FeedbackReason;
   comment?: string;
 };
 
-export function AnswerFeedback({ state, rating, comment }: AnswerFeedbackProps) {
+function ReasonSelector({ selectedReason }: { selectedReason?: FeedbackReason }) {
+  return (
+    <fieldset className="mt-2 space-y-1">
+      <legend className="text-xs font-medium text-slate-700">
+        Reason (optional)
+      </legend>
+      {REASON_VALUES.map((value) => (
+        <label key={value} className="flex items-center gap-2 text-sm text-slate-700">
+          <input
+            type="radio"
+            name="feedback-reason"
+            value={value}
+            defaultChecked={selectedReason === value}
+            className="accent-slate-700"
+          />
+          {FEEDBACK_REASON_LABELS[value]}
+        </label>
+      ))}
+    </fieldset>
+  );
+}
+
+export function AnswerFeedback({
+  state,
+  rating,
+  selectedRating,
+  reason,
+  comment,
+}: AnswerFeedbackProps) {
   if (state === "saved") {
     return (
       <aside
@@ -47,6 +83,7 @@ export function AnswerFeedback({ state, rating, comment }: AnswerFeedbackProps) 
             Unhelpful
           </button>
         </div>
+        {selectedRating === "unhelpful" ? <ReasonSelector selectedReason={reason} /> : null}
         <textarea
           className="w-full rounded border border-slate-300 p-2 text-sm"
           placeholder="Optional comment"
@@ -78,6 +115,7 @@ export function AnswerFeedback({ state, rating, comment }: AnswerFeedbackProps) 
           Unhelpful
         </button>
       </div>
+      {selectedRating === "unhelpful" ? <ReasonSelector selectedReason={reason} /> : null}
       <textarea
         className="w-full rounded border border-slate-300 p-2 text-sm"
         placeholder="Optional comment"

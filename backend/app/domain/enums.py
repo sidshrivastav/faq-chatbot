@@ -36,6 +36,14 @@ class FeedbackRating(StrEnum):
     UNHELPFUL = "unhelpful"
 
 
+class FeedbackReason(StrEnum):
+    INCORRECT_ANSWER = "incorrect_answer"
+    NOT_SPECIFIC_ENOUGH = "not_specific_enough"
+    MISSING_FROM_FAQ = "missing_from_faq"
+    CONFUSING_RESPONSE = "confusing_response"
+    OUTDATED_SOURCE = "outdated_source"
+
+
 class UnansweredReason(StrEnum):
     NO_ACTIVE_SOURCE = "no_active_source"
     INSUFFICIENT_CONTEXT = "insufficient_context"

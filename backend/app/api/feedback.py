@@ -57,6 +57,7 @@ def submit_feedback(
         use_case_id=record.use_case_id,
         faq_source_id_at_time=record.faq_source_id_at_time,
         rating=record.rating,
+        reason=record.reason,
         comment=record.comment,
         created_at=record.created_at,
     )

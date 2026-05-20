@@ -217,8 +217,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Feedback"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
+        "422":
+          description: Validation error — e.g. reason provided with helpful rating
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
   /admin/unanswered-questions:
     get:
       summary: List unanswered questions for admin review
@@ -474,6 +482,14 @@ components:
             $ref: "#/components/schemas/FaqEntry"
         feedback_allowed:
           type: boolean
+    FeedbackReason:
+      type: string
+      enum:
+        - incorrect_answer
+        - not_specific_enough
+        - missing_from_faq
+        - confusing_response
+        - outdated_source
     FeedbackCreate:
       type: object
       required: [rating]
@@ -481,11 +497,18 @@ components:
         rating:
           type: string
           enum: [helpful, unhelpful]
+        reason:
+          $ref: "#/components/schemas/FeedbackReason"
+          nullable: true
+          description: >
+            Optional structured reason. Only valid when rating is "unhelpful".
+            Supplying a reason with rating "helpful" returns 422.
         comment:
           type: string
+          nullable: true
     Feedback:
       type: object
-      required: [id, answer_id, question_id, rating, created_at]
+      required: [id, answer_id, question_id, rating, reason, created_at]
       properties:
         id:
           type: string
@@ -493,11 +516,20 @@ components:
           type: string
         question_id:
           type: string
+        use_case_id:
+          type: string
+        faq_source_id_at_time:
+          type: string
+          nullable: true
         rating:
           type: string
           enum: [helpful, unhelpful]
+        reason:
+          $ref: "#/components/schemas/FeedbackReason"
+          nullable: true
         comment:
           type: string
+          nullable: true
         created_at:
           type: string
           format: date-time

@@ -46,11 +46,23 @@ def create_app() -> FastAPI:
 
     @app.exception_handler(RequestValidationError)
     async def validation_exception_handler(_: Request, exc: RequestValidationError) -> JSONResponse:
+        def _sanitize(errors: list) -> list:
+            # Pydantic v2 model_validator ctx may contain non-serializable Exception
+            # instances — convert to safe strings so JSONResponse can encode them.
+            safe = []
+            for err in errors:
+                e = dict(err)
+                if "ctx" in e:
+                    e["ctx"] = {k: str(v) for k, v in e["ctx"].items()}
+                e.pop("url", None)
+                safe.append(e)
+            return safe
+
         return _error_response(
             status.HTTP_422_UNPROCESSABLE_ENTITY,
             "validation_error",
             "Request validation failed",
-            {"errors": exc.errors()},
+            {"errors": _sanitize(exc.errors())},
         )
 
     app.include_router(health_router)

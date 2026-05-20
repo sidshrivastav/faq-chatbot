@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from uuid import uuid4
 
-from app.domain.enums import FeedbackRating
+from app.domain.enums import FeedbackRating, FeedbackReason
 from app.schemas.faq_source import utc_now
 
 
@@ -17,6 +17,7 @@ class FeedbackRecord:
     faq_source_id_at_time: str | None
     user_id: str
     rating: FeedbackRating
+    reason: FeedbackReason | None
     comment: str | None
     created_at: datetime
 
@@ -40,6 +41,7 @@ class InMemoryFeedbackRepository:
         faq_source_id_at_time: str | None,
         user_id: str,
         rating: FeedbackRating,
+        reason: FeedbackReason | None,
         comment: str | None,
     ) -> FeedbackRecord:
         record = FeedbackRecord(
@@ -50,6 +52,7 @@ class InMemoryFeedbackRepository:
             faq_source_id_at_time=faq_source_id_at_time,
             user_id=user_id,
             rating=rating,
+            reason=reason,
             comment=comment,
             created_at=utc_now(),
         )

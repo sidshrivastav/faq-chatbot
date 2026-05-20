@@ -18,6 +18,7 @@
 - T047: Added feedback API route; registered in main.py; T042 and T043 now pass.
 - T048: Added AnswerFeedback component with idle, saving, saved, and error states; T044 now passes.
 - T049: Added feedback.ts service adapter; integrated AnswerFeedback into ChatPage for feedback_allowed messages.
+- [Stage 6 apply: add-feedback-reasons] TC01–TC03: Wrote failing tests for reason field (9 backend, 3 frontend). TC04: Added FeedbackReason enum. TC05: Added cross-field validator to FeedbackCreate; reason field to FeedbackResponse. TC06–TC08: Threaded reason through repository, service, and API route. Fixed validation exception handler for Pydantic v2 model_validator ctx serialization. TC09–TC10: Added FeedbackReason type and FEEDBACK_REASON_LABELS to feedback.ts; added ReasonSelector to AnswerFeedback component behind selectedRating prop. TC11: Updated openapi.yaml with FeedbackReason schema and 422 on feedback route. Final: 80 backend / 35 frontend tests passing, zero regressions.
 - T060: Wrote failing role-authorization API tests covering unauthenticated/end-user/admin/invalid-role cases; tests failed on /me (404) before implementation.
 - T061: Wrote failing frontend navigation tests for admin nav, end-user nav, and UnauthorizedState; failed on missing component and App role prop.
 - T062: Confirmed require_admin is applied to every route in faq_sources.py; no changes needed.

@@ -133,6 +133,36 @@ def test_feedback_on_missing_answer_raises(service: FeedbackService) -> None:
         )
 
 
+# ---------------------------------------------------------------------------
+# TC02 – add-feedback-reasons: reason stored on record
+# ---------------------------------------------------------------------------
+
+def test_reason_stored_on_unhelpful_feedback_record(service: FeedbackService) -> None:
+    from app.domain.enums import FeedbackReason
+    record = service.submit_feedback(
+        answer_id="ans-1",
+        user_id="user-1",
+        payload=FeedbackCreate(rating=FeedbackRating.UNHELPFUL, reason=FeedbackReason.NOT_SPECIFIC_ENOUGH),
+    )
+    assert record.reason == FeedbackReason.NOT_SPECIFIC_ENOUGH
+
+
+def test_reason_is_none_when_not_provided(service: FeedbackService) -> None:
+    record = service.submit_feedback(
+        answer_id="ans-1",
+        user_id="user-1",
+        payload=FeedbackCreate(rating=FeedbackRating.UNHELPFUL),
+    )
+    assert record.reason is None
+
+
+def test_helpful_feedback_with_reason_raises_validation_error() -> None:
+    from pydantic import ValidationError
+    from app.domain.enums import FeedbackReason
+    with pytest.raises(ValidationError):
+        FeedbackCreate(rating=FeedbackRating.HELPFUL, reason=FeedbackReason.OUTDATED_SOURCE)
+
+
 def test_duplicate_feedback_raises(service: FeedbackService) -> None:
     service.submit_feedback(
         answer_id="ans-1",
