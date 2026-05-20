@@ -217,9 +217,65 @@ Avoid logging unnecessary full question/answer content. Never log secrets.
 
 - Invoke custom skills via the `Skill` tool (e.g., `Skill({ skill: "test-writer" })`).
 - Use the `task-runner` skill when the user asks to implement a task ID or range: `Skill({ skill: "task-runner", args: "T001" })`.
+- Use the `openspec-proposer` skill when the user says "propose change `<change-id>`".
+- Use the `openspec-applier` skill when the user says "apply change `<change-id>`".
+- Use the `openspec-archiver` skill when the user says "archive change `<change-id>`".
 - Use parallel tool calls (Read, Grep, Glob) when gathering independent context before implementation.
 - Persist project decisions, user preferences, and non-obvious constraints to memory files under `.claude/` so future sessions retain context.
 - Do not call real LLM provider APIs in tests; use the fake provider in `backend/app/llm/`.
+
+## Stage 6: OpenSpec Change Management
+
+Stage 6 changes must not be implemented as freeform AI requests.
+
+Use these skills:
+
+- `docs/skills/openspec-proposer.md` for propose
+- `docs/skills/openspec-applier.md` for apply
+- `docs/skills/openspec-archiver.md` for archive
+
+Required lifecycle:
+
+1. Propose
+2. Apply
+3. Archive
+
+Every change must include:
+
+- `proposal.md`
+- `spec-diff.md`
+- `tasks.md`
+- `impact-analysis.md`
+- `archive.md` after completion
+
+Rules:
+
+- Do not implement a Stage 6 change before proposal artifacts exist.
+- Use TDD during apply.
+- Use `docs/skills/test-writer.md` during apply.
+- Preserve role-based access.
+- Preserve grounded-answer behavior.
+- Do not call real LLM APIs in automated tests.
+- Keep each change scoped to one change ID.
+- Run relevant backend/frontend tests before archive.
+- Every commit must include the change ID.
+
+Commit message format:
+
+```text
+change:<change-id> <summary>
+```
+
+Examples:
+
+```text
+change:add-feedback-reasons document change case
+change:add-feedback-reasons implement feedback reasons
+change:add-feedback-reasons archive completed change
+change:modify-active-source-deletion-policy document change case
+change:modify-active-source-deletion-policy block active source deletion
+change:modify-active-source-deletion-policy archive completed change
+```
 
 ## Custom Skill: test-writer
 
@@ -251,6 +307,8 @@ The `task-runner` skill must:
 - Run verification commands.
 - Preserve trace logs.
 - Stop after the requested task or range.
+
+For Stage 6 change management, use the OpenSpec skills instead of task-runner.
 
 ## 14. Harness Workflow: Brainstorm -> Plan -> Implement -> Verify
 
