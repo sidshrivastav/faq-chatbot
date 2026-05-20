@@ -21,14 +21,14 @@
 
 **Purpose**: Initialize backend, frontend, tooling, and shared documentation structure.
 
-- [ ] T001 Create backend project skeleton in `backend/app/main.py`, `backend/app/api/__init__.py`, `backend/app/schemas/__init__.py`, `backend/app/services/__init__.py`, and `backend/tests/conftest.py` (Est: 2h; test scenario: `python -m compileall backend/app` succeeds)
-- [ ] T002 Create backend dependency files in `backend/requirements.txt` and `backend/requirements-dev.txt` for FastAPI, Pydantic v2, pytest, coverage, and SQLite support (Est: 1h; test scenario: dependency install command can resolve all packages)
-- [ ] T003 [P] Create frontend React/Tailwind project skeleton in `frontend/src/App.tsx`, `frontend/src/main.tsx`, `frontend/src/styles/index.css`, and `frontend/package.json` (Est: 3h; test scenario: `npm run build` reaches the expected missing-implementation boundary or succeeds after dependencies install)
-- [ ] T004 [P] Configure backend pytest and coverage defaults in `backend/pyproject.toml` with 70%+ API coverage target documented (Est: 1h; test scenario: `pytest --collect-only` discovers tests without import errors)
-- [ ] T005 [P] Configure frontend lint/build scripts in `frontend/package.json` and Tailwind config in `frontend/tailwind.config.js` (Est: 2h; test scenario: `npm run build` uses Tailwind entrypoint without CSS import errors)
-- [ ] T006 [P] Create local environment example files in `backend/.env.example` and `frontend/.env.example` without real secrets (Est: 1h; test scenario: app startup documents required variables without secret values)
-- [ ] T007 [P] Create developer command notes in `docs/development.md` for backend tests, frontend build, local run, and no-real-LLM-test rule (Est: 2h; test scenario: commands listed match `quickstart.md`)
-- [ ] T008 Create root-level ignore and placeholder directories in `.gitignore`, `backend/tests/api/.gitkeep`, `backend/tests/services/.gitkeep`, `frontend/tests/.gitkeep` (Est: 1h; test scenario: generated caches and SQLite files are ignored)
+- [x] T001 Create backend project skeleton in `backend/app/main.py`, `backend/app/api/__init__.py`, `backend/app/schemas/__init__.py`, `backend/app/services/__init__.py`, and `backend/tests/conftest.py` (Est: 2h; test scenario: `python -m compileall backend/app` succeeds)
+- [x] T002 Create backend dependency files in `backend/requirements.txt` and `backend/requirements-dev.txt` for FastAPI, Pydantic v2, pytest, coverage, and SQLite support (Est: 1h; test scenario: dependency install command can resolve all packages)
+- [x] T003 [P] Create frontend React/Tailwind project skeleton in `frontend/src/App.tsx`, `frontend/src/main.tsx`, `frontend/src/styles/index.css`, and `frontend/package.json` (Est: 3h; test scenario: `npm run build` reaches the expected missing-implementation boundary or succeeds after dependencies install)
+- [x] T004 [P] Configure backend pytest and coverage defaults in `backend/pyproject.toml` with 70%+ API coverage target documented (Est: 1h; test scenario: `pytest --collect-only` discovers tests without import errors)
+- [x] T005 [P] Configure frontend lint/build scripts in `frontend/package.json` and Tailwind config in `frontend/tailwind.config.js` (Est: 2h; test scenario: `npm run build` uses Tailwind entrypoint without CSS import errors)
+- [x] T006 [P] Create local environment example files in `backend/.env.example` and `frontend/.env.example` without real secrets (Est: 1h; test scenario: app startup documents required variables without secret values)
+- [x] T007 [P] Create developer command notes in `docs/development.md` for backend tests, frontend build, local run, and no-real-LLM-test rule (Est: 2h; test scenario: commands listed match `quickstart.md`)
+- [x] T008 Create root-level ignore and placeholder directories in `.gitignore`, `backend/tests/api/.gitkeep`, `backend/tests/services/.gitkeep`, `frontend/tests/.gitkeep` (Est: 1h; test scenario: generated caches and SQLite files are ignored)
 
 **Checkpoint**: Project skeleton and tooling conventions are ready.
 
