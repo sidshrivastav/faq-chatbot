@@ -65,20 +65,20 @@
 
 ### Tests for User Story 1
 
-- [ ] T021 [P] [US1] Write failing API contract tests for FAQ source list/create/detail/update/delete in `backend/tests/api/test_faq_sources_api.py` (Est: 3h; test scenario: admin succeeds and end user receives 403 for admin source routes)
-- [ ] T022 [P] [US1] Harness trace task: write failing API tests for FAQ source activation/deactivation conflict handling in `backend/tests/api/test_faq_source_activation.py` (Est: 3h; test scenario: activating a ready source makes it active and deactivates any previous active source for that use case)
-- [ ] T023 [P] [US1] Write failing service tests for source readiness and invalid entries in `backend/tests/services/test_source_service.py` (Est: 2h; test scenario: empty, duplicate, and unreadable-like entries produce invalid or warning readiness)
-- [ ] T024 [P] [US1] Write failing frontend tests for source list states in `frontend/tests/FaqSourcesList.test.tsx` (Est: 2h; test scenario: default, empty, loading, invalid-source, and error states render)
+- [x] T021 [P] [US1] Write failing API contract tests for FAQ source list/create/detail/update/delete in `backend/tests/api/test_faq_sources_api.py` (Est: 3h; test scenario: admin succeeds and end user receives 403 for admin source routes)
+- [x] T022 [P] [US1] Harness trace task: write failing API tests for FAQ source activation/deactivation conflict handling in `backend/tests/api/test_faq_source_activation.py` (Est: 3h; test scenario: activating a ready source makes it active and deactivates any previous active source for that use case)
+- [x] T023 [P] [US1] Write failing service tests for source readiness and invalid entries in `backend/tests/services/test_source_service.py` (Est: 2h; test scenario: empty, duplicate, and unreadable-like entries produce invalid or warning readiness)
+- [x] T024 [P] [US1] Write failing frontend tests for source list states in `frontend/tests/FaqSourcesList.test.tsx` (Est: 2h; test scenario: default, empty, loading, invalid-source, and error states render)
 
 ### Implementation for User Story 1
 
-- [ ] T025 [P] [US1] Implement FAQ source and FAQ entry schemas in `backend/app/schemas/faq_source.py` (Est: 2h; test scenario: schema rejects missing source name, use case, and entry answer text)
-- [ ] T026 [US1] Implement FAQ source repository operations in `backend/app/repositories/faq_sources.py` (Est: 3h; test scenario: repository persists source, entries, active flag, readiness, and timestamps)
-- [ ] T027 [US1] Implement FAQ source service state transitions in `backend/app/services/source_service.py` (Est: 4h; test scenario: T023 passes for create/update/activate/deactivate/archive/delete transitions)
-- [ ] T028 [US1] Implement admin FAQ source routes in `backend/app/api/faq_sources.py` and register them in `backend/app/main.py` (Est: 3h; test scenario: T021 and T022 pass with admin role and reject end-user role)
-- [ ] T029 [P] [US1] Implement FAQ Sources List screen in `frontend/src/pages/admin/FaqSourcesList.tsx` using Stage 2 filters and states (Est: 3h; test scenario: T024 passes and source status text is not color-only)
-- [ ] T030 [P] [US1] Implement FAQ Source Detail screen in `frontend/src/pages/admin/FaqSourceDetail.tsx` with readiness, warnings, activation, deactivation, archive, and delete affordances (Est: 4h; test scenario: component test renders active, invalid, archived, and activation-conflict states)
-- [ ] T031 [US1] Wire frontend source API functions in `frontend/src/services/faqSources.ts` to list/detail/create/update/activate/deactivate/archive/delete contracts (Est: 2h; test scenario: mocked client calls use the paths in `contracts/openapi.yaml`)
+- [x] T025 [P] [US1] Implement FAQ source and FAQ entry schemas in `backend/app/schemas/faq_source.py` (Est: 2h; test scenario: schema rejects missing source name, use case, and entry answer text)
+- [x] T026 [US1] Implement FAQ source repository operations in `backend/app/repositories/faq_sources.py` (Est: 3h; test scenario: repository persists source, entries, active flag, readiness, and timestamps)
+- [x] T027 [US1] Implement FAQ source service state transitions in `backend/app/services/source_service.py` (Est: 4h; test scenario: T023 passes for create/update/activate/deactivate/archive/delete transitions)
+- [x] T028 [US1] Implement admin FAQ source routes in `backend/app/api/faq_sources.py` and register them in `backend/app/main.py` (Est: 3h; test scenario: T021 and T022 pass with admin role and reject end-user role)
+- [x] T029 [P] [US1] Implement FAQ Sources List screen in `frontend/src/pages/admin/FaqSourcesList.tsx` using Stage 2 filters and states (Est: 3h; test scenario: T024 passes and source status text is not color-only)
+- [x] T030 [P] [US1] Implement FAQ Source Detail screen in `frontend/src/pages/admin/FaqSourceDetail.tsx` with readiness, warnings, activation, deactivation, archive, and delete affordances (Est: 4h; test scenario: component test renders active, invalid, archived, and activation-conflict states)
+- [x] T031 [US1] Wire frontend source API functions in `frontend/src/services/faqSources.ts` to list/detail/create/update/activate/deactivate/archive/delete contracts (Est: 2h; test scenario: mocked client calls use the paths in `contracts/openapi.yaml`)
 
 **Verification commands**: `pytest backend/tests/api/test_faq_sources_api.py backend/tests/api/test_faq_source_activation.py backend/tests/services/test_source_service.py`; `npm run test -- FaqSourcesList`
 
