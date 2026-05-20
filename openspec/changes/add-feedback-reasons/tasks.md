@@ -62,7 +62,7 @@ Verification: `pytest backend/tests/api/test_feedback_api.py backend/tests/servi
   - Add `FeedbackReason` type export matching the five enum values
   - (Est: 0.5h; test scenario: TypeScript build succeeds)
 
-- [ ] TC10 Update `frontend/src/components/feedback/AnswerFeedback.tsx`
+- [x] TC10 Update `frontend/src/components/feedback/AnswerFeedback.tsx`
   - Add `reason` prop and `selectedReason` to component state/props
   - Show reason selector (radio group or select) after user clicks Unhelpful
   - Hide reason selector when state is idle before selection, or after Helpful is chosen
@@ -74,7 +74,7 @@ Verification: `pytest backend/tests/api/test_feedback_api.py backend/tests/servi
 
 ## Documentation Tasks
 
-- [ ] TC11 Update `specs/001-faq-knowledge-assistant/contracts/openapi.yaml`
+- [x] TC11 Update `specs/001-faq-knowledge-assistant/contracts/openapi.yaml`
   - Add `FeedbackReason` enum schema
   - Add `reason` field to feedback request and response schemas
   - Add 422 description for reason-with-helpful-rating case
@@ -114,9 +114,9 @@ cd frontend && npm run build
 - [x] TC07 service passes reason through
 - [x] TC08 API route passes reason into response
 - [x] TC09 frontend service type updated
-- [ ] TC10 `AnswerFeedback` component shows reason selector on unhelpful click
-- [ ] TC11 OpenAPI contract updated
-- [ ] All existing feedback tests still pass
-- [ ] Full backend test suite passes
-- [ ] Full frontend test suite passes
-- [ ] Frontend build passes
+- [x] TC10 `AnswerFeedback` component shows reason selector on unhelpful click
+- [x] TC11 OpenAPI contract updated
+- [x] All existing feedback tests still pass
+- [x] Full backend test suite passes
+- [x] Full frontend test suite passes
+- [x] Frontend build passes
