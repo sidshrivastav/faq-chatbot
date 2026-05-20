@@ -40,18 +40,18 @@
 
 **Critical**: No user story work should start until this phase is complete.
 
-- [ ] T009 Write failing backend smoke API tests in `backend/tests/api/test_health_and_errors.py` for `GET /health` and shared error response shape (Est: 1h; test scenario: tests fail before route/error handler implementation)
-- [ ] T010 Implement FastAPI app factory, health route, CORS setup, and shared exception handlers in `backend/app/main.py` and `backend/app/api/health.py` (Est: 2h; test scenario: T009 passes with `pytest backend/tests/api/test_health_and_errors.py`)
-- [ ] T011 [P] Define shared domain enums in `backend/app/domain/enums.py` for roles, FAQ source status, readiness state, answer state, feedback rating, and unanswered reason (Est: 1h; test scenario: enum unit tests reject unsupported values)
-- [ ] T012 [P] Define base Pydantic schemas and error schema in `backend/app/schemas/common.py` (Est: 2h; test scenario: schema tests validate required `code` and `message` fields)
-- [ ] T013 Write failing repository tests in `backend/tests/unit/test_sqlite_repository.py` for SQLite connection lifecycle and transaction rollback (Est: 2h; test scenario: rollback test fails before repository implementation)
-- [ ] T014 Implement SQLite repository/session helpers in `backend/app/repositories/sqlite.py` and `backend/app/repositories/base.py` (Est: 3h; test scenario: T013 passes against a temporary SQLite database)
-- [ ] T015 [P] Write failing auth dependency tests in `backend/tests/unit/test_auth_dependencies.py` for admin, end-user, and unauthorized role cases (Est: 2h; test scenario: tests fail before auth dependency implementation)
-- [ ] T016 Implement local-development auth dependencies in `backend/app/auth/dependencies.py` and `backend/app/auth/models.py` (Est: 2h; test scenario: T015 passes and unauthorized access returns consistent error shape)
-- [ ] T017 [P] Create frontend API client foundation in `frontend/src/services/apiClient.ts` with typed success/error handling (Est: 2h; test scenario: client unit test covers success and error response adaptation)
-- [ ] T018 [P] Create shared frontend UI primitives in `frontend/src/components/common/StatusBadge.tsx`, `EmptyState.tsx`, `ErrorState.tsx`, and `LoadingState.tsx` (Est: 3h; test scenario: component tests render accessible labels for each state)
-- [ ] T019 [P] Configure structured logging helpers in `backend/app/services/logging.py` for source, chat, feedback, analytics, and authorization events (Est: 2h; test scenario: unit test captures structured log fields)
-- [ ] T020 Document foundation verification commands in `docs/development.md` for `pytest`, coverage, and frontend build (Est: 1h; test scenario: commands align with generated project paths)
+- [x] T009 Write failing backend smoke API tests in `backend/tests/api/test_health_and_errors.py` for `GET /health` and shared error response shape (Est: 1h; test scenario: tests fail before route/error handler implementation)
+- [x] T010 Implement FastAPI app factory, health route, CORS setup, and shared exception handlers in `backend/app/main.py` and `backend/app/api/health.py` (Est: 2h; test scenario: T009 passes with `pytest backend/tests/api/test_health_and_errors.py`)
+- [x] T011 [P] Define shared domain enums in `backend/app/domain/enums.py` for roles, FAQ source status, readiness state, answer state, feedback rating, and unanswered reason (Est: 1h; test scenario: enum unit tests reject unsupported values)
+- [x] T012 [P] Define base Pydantic schemas and error schema in `backend/app/schemas/common.py` (Est: 2h; test scenario: schema tests validate required `code` and `message` fields)
+- [x] T013 Write failing repository tests in `backend/tests/unit/test_sqlite_repository.py` for SQLite connection lifecycle and transaction rollback (Est: 2h; test scenario: rollback test fails before repository implementation)
+- [x] T014 Implement SQLite repository/session helpers in `backend/app/repositories/sqlite.py` and `backend/app/repositories/base.py` (Est: 3h; test scenario: T013 passes against a temporary SQLite database)
+- [x] T015 [P] Write failing auth dependency tests in `backend/tests/unit/test_auth_dependencies.py` for admin, end-user, and unauthorized role cases (Est: 2h; test scenario: tests fail before auth dependency implementation)
+- [x] T016 Implement local-development auth dependencies in `backend/app/auth/dependencies.py` and `backend/app/auth/models.py` (Est: 2h; test scenario: T015 passes and unauthorized access returns consistent error shape)
+- [x] T017 [P] Create frontend API client foundation in `frontend/src/services/apiClient.ts` with typed success/error handling (Est: 2h; test scenario: client unit test covers success and error response adaptation)
+- [x] T018 [P] Create shared frontend UI primitives in `frontend/src/components/common/StatusBadge.tsx`, `EmptyState.tsx`, `ErrorState.tsx`, and `LoadingState.tsx` (Est: 3h; test scenario: component tests render accessible labels for each state)
+- [x] T019 [P] Configure structured logging helpers in `backend/app/services/logging.py` for source, chat, feedback, analytics, and authorization events (Est: 2h; test scenario: unit test captures structured log fields)
+- [x] T020 Document foundation verification commands in `docs/development.md` for `pytest`, coverage, and frontend build (Est: 1h; test scenario: commands align with generated project paths)
 
 **Checkpoint**: Foundation ready; user story implementation can start.
 
