@@ -1,3 +1,4 @@
+import { AnswerFeedback } from "../../components/feedback/AnswerFeedback";
 import { LoadingState } from "../../components/common/LoadingState";
 import { StatusBadge } from "../../components/common/StatusBadge";
 
@@ -7,6 +8,7 @@ type ChatMessage = {
   text: string;
   answer_state?: "answered" | "unsupported" | "no_active_source" | "error";
   source_name?: string | null;
+  feedback_allowed?: boolean;
 };
 
 type ChatPageProps = {
@@ -88,6 +90,9 @@ export function ChatPage({ useCase, messages, composerValue, state = "ready" }: 
               {message.source_name ? <span className="text-xs text-slate-600">{message.source_name}</span> : null}
             </div>
             <p className="mt-3 text-slate-900">{message.text}</p>
+            {message.role === "assistant" && message.feedback_allowed ? (
+              <AnswerFeedback answerId={message.id} state="idle" />
+            ) : null}
           </article>
         ))}
       </div>

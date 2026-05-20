@@ -10,6 +10,14 @@
 - T039: Added chat API routing and in-memory persistence; verified through the backend chat suite.
 - T040: Added the static Chat screen with grounded/unsupported/no-active-source states; verified through the frontend chat suite.
 - T041: Added chat and use-case frontend service adapters; verified through the frontend service suite and full frontend build.
+- T042: Wrote failing feedback API tests for POST /answers/{answer_id}/feedback; failed on 404 before route existed.
+- T043: Wrote failing feedback service tests; failed on missing module before implementation.
+- T044: Wrote failing AnswerFeedback frontend tests; failed on missing component.
+- T045: Added FeedbackCreate and FeedbackResponse Pydantic schemas.
+- T046: Added InMemoryFeedbackRepository and FeedbackService with AnswerNotFoundError and DuplicateFeedbackError.
+- T047: Added feedback API route; registered in main.py; T042 and T043 now pass.
+- T048: Added AnswerFeedback component with idle, saving, saved, and error states; T044 now passes.
+- T049: Added feedback.ts service adapter; integrated AnswerFeedback into ChatPage for feedback_allowed messages.
 - T060: Wrote failing role-authorization API tests covering unauthenticated/end-user/admin/invalid-role cases; tests failed on /me (404) before implementation.
 - T061: Wrote failing frontend navigation tests for admin nav, end-user nav, and UnauthorizedState; failed on missing component and App role prop.
 - T062: Confirmed require_admin is applied to every route in faq_sources.py; no changes needed.

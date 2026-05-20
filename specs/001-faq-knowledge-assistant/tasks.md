@@ -122,17 +122,17 @@
 
 ### Tests for User Story 3
 
-- [ ] T042 [P] [US3] Write failing API tests for `POST /answers/{answer_id}/feedback` in `backend/tests/api/test_feedback_api.py` (Est: 2h; test scenario: helpful, unhelpful with comment, unanswered feedback, and missing answer cases are covered)
-- [ ] T043 [P] [US3] Write failing service tests for feedback association rules in `backend/tests/services/test_feedback_service.py` (Est: 2h; test scenario: feedback stores answer, question, use case, source-at-time, rating, and optional comment)
-- [ ] T044 [P] [US3] Write failing frontend feedback component tests in `frontend/tests/AnswerFeedback.test.tsx` (Est: 2h; test scenario: saved state, optional comment, retry-preserves-comment error state render)
+- [x] T042 [P] [US3] Write failing API tests for `POST /answers/{answer_id}/feedback` in `backend/tests/api/test_feedback_api.py` (Est: 2h; test scenario: helpful, unhelpful with comment, unanswered feedback, and missing answer cases are covered)
+- [x] T043 [P] [US3] Write failing service tests for feedback association rules in `backend/tests/services/test_feedback_service.py` (Est: 2h; test scenario: feedback stores answer, question, use case, source-at-time, rating, and optional comment)
+- [x] T044 [P] [US3] Write failing frontend feedback component tests in `frontend/tests/AnswerFeedback.test.tsx` (Est: 2h; test scenario: saved state, optional comment, retry-preserves-comment error state render)
 
 ### Implementation for User Story 3
 
-- [ ] T045 [P] [US3] Implement feedback schemas in `backend/app/schemas/feedback.py` (Est: 1h; test scenario: schema accepts only helpful/unhelpful ratings and optional comment)
-- [ ] T046 [US3] Implement feedback repository and service in `backend/app/repositories/feedback.py` and `backend/app/services/feedback_service.py` (Est: 3h; test scenario: T043 passes and duplicate handling is explicit)
-- [ ] T047 [US3] Implement feedback API route in `backend/app/api/feedback.py` (Est: 2h; test scenario: T042 passes and feedback on unsupported answer is accepted)
-- [ ] T048 [P] [US3] Implement AnswerFeedback UI component in `frontend/src/components/feedback/AnswerFeedback.tsx` (Est: 3h; test scenario: T044 passes and buttons have accessible names)
-- [ ] T049 [US3] Integrate feedback component into `frontend/src/pages/chat/ChatPage.tsx` and service calls in `frontend/src/services/feedback.ts` (Est: 2h; test scenario: mocked feedback submission preserves selected rating and comment on error)
+- [x] T045 [P] [US3] Implement feedback schemas in `backend/app/schemas/feedback.py` (Est: 1h; test scenario: schema accepts only helpful/unhelpful ratings and optional comment)
+- [x] T046 [US3] Implement feedback repository and service in `backend/app/repositories/feedback.py` and `backend/app/services/feedback_service.py` (Est: 3h; test scenario: T043 passes and duplicate handling is explicit)
+- [x] T047 [US3] Implement feedback API route in `backend/app/api/feedback.py` (Est: 2h; test scenario: T042 passes and feedback on unsupported answer is accepted)
+- [x] T048 [P] [US3] Implement AnswerFeedback UI component in `frontend/src/components/feedback/AnswerFeedback.tsx` (Est: 3h; test scenario: T044 passes and buttons have accessible names)
+- [x] T049 [US3] Integrate feedback component into `frontend/src/pages/chat/ChatPage.tsx` and service calls in `frontend/src/services/feedback.ts` (Est: 2h; test scenario: mocked feedback submission preserves selected rating and comment on error)
 
 **Verification commands**: `pytest backend/tests/api/test_feedback_api.py backend/tests/services/test_feedback_service.py`; `npm run test -- AnswerFeedback`
 
