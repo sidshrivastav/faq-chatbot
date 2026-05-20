@@ -220,6 +220,7 @@ Avoid logging unnecessary full question/answer content. Never log secrets.
 - Use the `openspec-proposer` skill when the user says "propose change `<change-id>`".
 - Use the `openspec-applier` skill when the user says "apply change `<change-id>`".
 - Use the `openspec-archiver` skill when the user says "archive change `<change-id>`".
+- Use the `qa-reviewer` skill when the user asks to run Stage 7 QA review.
 - Use parallel tool calls (Read, Grep, Glob) when gathering independent context before implementation.
 - Persist project decisions, user preferences, and non-obvious constraints to memory files under `.claude/` so future sessions retain context.
 - Do not call real LLM provider APIs in tests; use the fake provider in `backend/app/llm/`.
@@ -276,6 +277,28 @@ change:modify-active-source-deletion-policy document change case
 change:modify-active-source-deletion-policy block active source deletion
 change:modify-active-source-deletion-policy archive completed change
 ```
+
+## Stage 7: QA Review
+
+Stage 7 requires systematic AI-assisted review across performance, security, code quality, observability, test coverage, and documentation consistency.
+
+Use the `qa-reviewer` skill: `docs/skills/qa-reviewer.md`.
+Claude: invoke with `Skill({ skill: "qa-reviewer" })`.
+
+Required outputs:
+
+- `docs/performance.md`
+- `docs/security.md`
+- `docs/code-review.md`
+- `docs/qa-summary.md`
+
+Rules:
+
+- Run after implementation and change management are complete.
+- Do not make vague claims — every finding must cite evidence.
+- Do not call real LLM APIs during review.
+- Separate AI-found issues from human-confirmed issues.
+- Do not fix issues outside the review scope without recording the fix as a finding.
 
 ## Custom Skill: test-writer
 
