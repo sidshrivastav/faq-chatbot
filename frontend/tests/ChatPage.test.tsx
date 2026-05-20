@@ -36,6 +36,24 @@ describe("ChatPage", () => {
     expect(markup).toContain("Ask a question");
   });
 
+  it("renders an editable question composer that submits the form", () => {
+    const markup = renderToStaticMarkup(
+      <ChatPage
+        useCase={useCase}
+        messages={[]}
+        composerValue=""
+        onComposerChange={() => undefined}
+        onSubmitQuestion={() => undefined}
+        state="ready"
+      />,
+    );
+
+    expect(markup).toContain('textarea');
+    expect(markup).not.toContain("readOnly");
+    expect(markup).not.toContain("readonly");
+    expect(markup).toContain('type="submit"');
+  });
+
   it("renders loading state while waiting for an answer", () => {
     const markup = renderToStaticMarkup(
       <ChatPage

@@ -23,6 +23,14 @@ describe("Role-aware navigation: admin", () => {
     const markup = renderToStaticMarkup(<App role="admin" />);
     expect(markup).toContain("FAQ Sources");
   });
+
+  it("uses client-side navigation controls instead of full-page anchor reloads", () => {
+    const markup = renderToStaticMarkup(<App role="admin" />);
+    expect(markup).toContain("FAQ Sources");
+    expect(markup).not.toContain('href="/admin/faq-sources"');
+    expect(markup).not.toContain('href="/admin/analytics"');
+    expect(markup).not.toContain('href="/admin/unanswered"');
+  });
 });
 
 describe("Role-aware navigation: end user", () => {
@@ -35,6 +43,12 @@ describe("Role-aware navigation: end user", () => {
     const markup = renderToStaticMarkup(<App role="end_user" />);
     expect(markup).not.toContain("FAQ Sources");
     expect(markup).not.toContain("Analytics");
+  });
+
+  it("uses client-side navigation for chat instead of a full-page anchor reload", () => {
+    const markup = renderToStaticMarkup(<App role="end_user" />);
+    expect(markup).toContain("Ask a Question");
+    expect(markup).not.toContain('href="/chat"');
   });
 });
 

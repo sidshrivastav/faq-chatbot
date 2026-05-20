@@ -11,6 +11,8 @@ type ChatMessage = {
   feedback_allowed?: boolean;
 };
 
+export type { ChatMessage };
+
 type ChatPageProps = {
   useCase: {
     id: string;
@@ -21,6 +23,8 @@ type ChatPageProps = {
   messages: ChatMessage[];
   composerValue: string;
   state?: "ready" | "loading";
+  onComposerChange?: (value: string) => void;
+  onSubmitQuestion?: () => void;
 };
 
 function answerTone(answerState?: ChatMessage["answer_state"]) {
@@ -52,7 +56,19 @@ function answerLabel(answerState?: ChatMessage["answer_state"]) {
   return "Chat message";
 }
 
-export function ChatPage({ useCase, messages, composerValue, state = "ready" }: ChatPageProps) {
+export function ChatPage({
+  useCase,
+  messages,
+  composerValue,
+  state = "ready",
+  onComposerChange,
+  onSubmitQuestion,
+}: ChatPageProps) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    onSubmitQuestion?.();
+  }
+
   return (
     <section aria-labelledby="chat-title" className="space-y-6">
       <header className="space-y-2">
@@ -97,20 +113,21 @@ export function ChatPage({ useCase, messages, composerValue, state = "ready" }: 
         ))}
       </div>
 
-      <form className="space-y-3">
+      <form className="space-y-3" onSubmit={handleSubmit}>
         <label className="block space-y-2">
           <span className="text-sm font-medium text-slate-900">Ask a question</span>
           <textarea
             aria-label="Question composer"
             className="min-h-28 w-full rounded-md border border-slate-300 bg-white p-3 text-sm text-slate-950"
             placeholder="Ask a question"
-            readOnly
+            onChange={(event) => onComposerChange?.(event.target.value)}
             value={composerValue}
           />
         </label>
         <button
           className="rounded-md bg-slate-950 px-4 py-2 text-sm font-medium text-white"
-          type="button"
+          disabled={state === "loading" || composerValue.trim().length === 0}
+          type="submit"
         >
           Ask a question
         </button>

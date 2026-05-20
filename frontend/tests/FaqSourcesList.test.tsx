@@ -33,10 +33,19 @@ describe("FaqSourcesList", () => {
   it("renders source list with text status labels", () => {
     const markup = renderToStaticMarkup(<FaqSourcesList sources={[...sources]} state="ready" />);
 
+    expect(markup).toContain("Add Source");
     expect(markup).toContain("Employee handbook FAQ");
     expect(markup).toContain("Active source");
     expect(markup).toContain("Invalid source");
     expect(markup).toContain("At least one valid FAQ entry is required");
+  });
+
+  it("renders reachable activation and delete actions for listed sources", () => {
+    const markup = renderToStaticMarkup(<FaqSourcesList sources={[...sources]} state="ready" />);
+
+    expect(markup).toContain("Actions");
+    expect(markup).toContain("Activate source");
+    expect(markup).toContain("Delete source");
   });
 
   it("renders loading, empty, and error states", () => {
@@ -46,9 +55,23 @@ describe("FaqSourcesList", () => {
     expect(renderToStaticMarkup(<FaqSourcesList sources={[]} state="empty" />)).toContain(
       "No FAQ sources",
     );
+    expect(renderToStaticMarkup(<FaqSourcesList sources={[]} state="empty" />)).toContain(
+      "Add Source",
+    );
     expect(renderToStaticMarkup(<FaqSourcesList sources={[]} state="error" />)).toContain(
       "Could not load FAQ sources",
     );
+  });
+
+  it("renders an add source form with required FAQ fields", () => {
+    const markup = renderToStaticMarkup(<FaqSourcesList sources={[]} state="empty" />);
+
+    expect(markup).toContain("Source name");
+    expect(markup).toContain("Use case");
+    expect(markup).toContain("FAQ question");
+    expect(markup).toContain("FAQ answer");
+    expect(markup).toContain("Create FAQ source");
+    expect(markup).not.toContain("Refresh the source list");
   });
 });
 
@@ -97,11 +120,12 @@ describe("faqSources service", () => {
     await faqSourcesService.archiveFaqSource("src-1");
     await faqSourcesService.deleteFaqSource("src-1");
 
-    expect(fetchMock).toHaveBeenCalledWith("/admin/faq-sources", expect.any(Object));
-    expect(fetchMock).toHaveBeenCalledWith("/admin/faq-sources/src-1", expect.any(Object));
-    expect(fetchMock).toHaveBeenCalledWith("/admin/faq-sources/src-1/activate", expect.any(Object));
-    expect(fetchMock).toHaveBeenCalledWith("/admin/faq-sources/src-1/deactivate", expect.any(Object));
-    expect(fetchMock).toHaveBeenCalledWith("/admin/faq-sources/src-1/archive", expect.any(Object));
+    expect(fetchMock).toHaveBeenCalledWith("http://localhost:8000/admin/faq-sources", expect.any(Object));
+    expect(fetchMock).toHaveBeenCalledWith("http://localhost:8000/admin/faq-sources/src-1", expect.any(Object));
+    expect(fetchMock).toHaveBeenCalledWith("http://localhost:8000/admin/faq-sources/src-1/activate", expect.any(Object));
+    expect(fetchMock).toHaveBeenCalledWith("http://localhost:8000/admin/faq-sources/src-1/deactivate", expect.any(Object));
+    expect(fetchMock).toHaveBeenCalledWith("http://localhost:8000/admin/faq-sources/src-1/archive", expect.any(Object));
+    expect(fetchMock).toHaveBeenCalledWith("http://localhost:8000/admin/faq-sources/src-1", expect.objectContaining({ method: "DELETE" }));
     vi.unstubAllGlobals();
   });
 });

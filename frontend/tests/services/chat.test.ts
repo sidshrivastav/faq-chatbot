@@ -18,7 +18,7 @@ describe("chat service", () => {
     });
 
     expect(fetchMock).toHaveBeenCalledWith(
-      "/chat/questions",
+      "http://localhost:8000/chat/questions",
       expect.objectContaining({
         method: "POST",
       }),
@@ -38,7 +38,7 @@ describe("chat service", () => {
     await useCasesService.listUseCases();
 
     expect(fetchMock).toHaveBeenCalledWith(
-      "/use-cases",
+      "http://localhost:8000/use-cases",
       expect.objectContaining({
         method: "GET",
       }),

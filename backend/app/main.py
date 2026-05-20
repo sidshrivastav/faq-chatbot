@@ -15,6 +15,7 @@ from app.api.health import router as health_router
 from app.api.feedback import reset_feedback_repository
 from app.api.feedback import router as feedback_router
 from app.api.me import router as me_router
+from app.api.use_cases import router as use_cases_router
 from app.schemas.common import ErrorResponse
 
 
@@ -67,6 +68,7 @@ def create_app() -> FastAPI:
 
     app.include_router(health_router)
     app.include_router(me_router)
+    app.include_router(use_cases_router)
     app.include_router(faq_sources_router)
     app.include_router(chat_router)
     app.include_router(feedback_router)
