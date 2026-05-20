@@ -6,7 +6,7 @@ from app.auth.dependencies import require_admin
 from app.auth.models import CurrentUser
 from app.repositories.faq_sources import InMemoryFaqSourceRepository
 from app.schemas.faq_source import FaqSourceCreate, FaqSourceDetail, FaqSourceListResponse, FaqSourceUpdate
-from app.services.source_service import SourceNotFoundError, SourceNotReadyError, SourceService
+from app.services.source_service import ActiveSourceDeletionError, SourceNotFoundError, SourceNotReadyError, SourceService
 
 router = APIRouter(prefix="/admin/faq-sources", tags=["FAQ Sources"])
 
@@ -83,6 +83,11 @@ def delete_source(
         service.delete_source(source_id)
     except SourceNotFoundError as exc:
         raise _not_found() from exc
+    except ActiveSourceDeletionError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail={"code": "source_active", "message": "FAQ source is currently active and cannot be deleted. Deactivate or archive it first.", "details": None},
+        ) from exc
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 

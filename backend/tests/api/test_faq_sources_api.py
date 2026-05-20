@@ -85,6 +85,33 @@ def test_end_user_cannot_access_admin_source_routes() -> None:
     assert response.json()["code"] == "forbidden"
 
 
+def test_delete_active_source_returns_409() -> None:
+    client = TestClient(create_app())
+
+    create_resp = client.post("/admin/faq-sources", json=valid_source_payload(), headers=ADMIN_HEADERS)
+    source_id = create_resp.json()["id"]
+
+    client.post(f"/admin/faq-sources/{source_id}/activate", headers=ADMIN_HEADERS)
+
+    delete_resp = client.delete(f"/admin/faq-sources/{source_id}", headers=ADMIN_HEADERS)
+    assert delete_resp.status_code == 409
+    body = delete_resp.json()
+    assert body["code"] == "source_active"
+
+
+def test_delete_inactive_source_returns_204() -> None:
+    client = TestClient(create_app())
+
+    create_resp = client.post("/admin/faq-sources", json=valid_source_payload(), headers=ADMIN_HEADERS)
+    source_id = create_resp.json()["id"]
+
+    client.post(f"/admin/faq-sources/{source_id}/activate", headers=ADMIN_HEADERS)
+    client.post(f"/admin/faq-sources/{source_id}/deactivate", headers=ADMIN_HEADERS)
+
+    delete_resp = client.delete(f"/admin/faq-sources/{source_id}", headers=ADMIN_HEADERS)
+    assert delete_resp.status_code == 204
+
+
 def test_create_source_validates_required_entries() -> None:
     client = TestClient(create_app())
 

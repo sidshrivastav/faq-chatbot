@@ -21,6 +21,10 @@ class SourceNotReadyError(Exception):
     pass
 
 
+class ActiveSourceDeletionError(Exception):
+    pass
+
+
 class SourceService:
     def __init__(self, repository) -> None:
         self.repository = repository
@@ -121,6 +125,11 @@ class SourceService:
         return self.repository.save_source(source)
 
     def delete_source(self, source_id: str) -> None:
+        source = self.repository.get_source(source_id)
+        if source is None:
+            raise SourceNotFoundError(source_id)
+        if source.is_active:
+            raise ActiveSourceDeletionError(source_id)
         if not self.repository.delete_source(source_id):
             raise SourceNotFoundError(source_id)
 

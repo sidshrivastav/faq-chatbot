@@ -139,6 +139,8 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
   /admin/faq-sources/{source_id}/activate:
     post:
       summary: Activate FAQ source for its use case
